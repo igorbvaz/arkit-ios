@@ -12,7 +12,12 @@ import ARKit
 class RampPlacerViewController: UIViewController {
 
     @IBOutlet var sceneView: ARSCNView!
-    var selectedRamp: String?
+    @IBOutlet var buttonsStackView: UIStackView!
+    @IBOutlet weak var rotateButton: UIButton!
+    @IBOutlet weak var upButton: UIButton!
+    @IBOutlet weak var downButton: UIButton!
+    
+    var selectedRamp: SCNNode?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -24,10 +29,12 @@ class RampPlacerViewController: UIViewController {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/pipe.dae")!
+        let scene = SCNScene(named: "art.scnassets/main.scn")!
+        sceneView.autoenablesDefaultLighting = true
         
         // Set the scene to the view
         sceneView.scene = scene
+        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -57,6 +64,53 @@ class RampPlacerViewController: UIViewController {
         rampPickerViewController.popoverPresentationController?.sourceRect = sender.bounds
     }
     
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let touch = touches.first else { return }
+        let results = sceneView.hitTest(touch.location(in: sceneView), types: .featurePoint)
+        guard let hitFeature = results.last else { return }
+        let hitTransform = SCNMatrix4(hitFeature.worldTransform)
+        let hitPosition = SCNVector3Make(hitTransform.m41, hitTransform.m42, hitTransform.m43)
+        placeRamp(position: hitPosition)
+    }
+    
+    func placeRamp(position: SCNVector3) {
+        if let ramp = selectedRamp {
+            ramp.position = position
+            ramp.scale = SCNVector3Make(0.01, 0.01, 0.01)
+            sceneView.scene.rootNode.addChildNode(ramp)
+        }
+    }
+    
+    @IBAction func removeTapped(sender: UIButton) {
+        if let ramp = selectedRamp {
+            ramp.removeFromParentNode()
+            selectedRamp = nil
+            buttonsStackView.isHidden = true
+        }
+    }
+    
+    @IBAction func onLongPress(_ sender: UILongPressGestureRecognizer) {
+        if let ramp = selectedRamp {
+            if sender.state == .ended {
+                ramp.removeAllActions()
+            } else if sender.state == .began {
+                switch sender.view {
+                case rotateButton:
+                    let rotate = SCNAction.repeatForever(SCNAction.rotateBy(x: 0, y: CGFloat(0.08 * Double.pi), z: 0, duration: 0.1))
+                    ramp.runAction(rotate)
+                case upButton:
+                    let up = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: 0.08, z: 0, duration: 0.1))
+                    ramp.runAction(up)
+                case downButton:
+                    let down = SCNAction.repeatForever(SCNAction.moveBy(x: 0, y: -0.08, z: 0, duration: 0.1))
+                    ramp.runAction(down)
+                default:
+                    break
+                }
+            }
+        }
+    }
+    
 }
 
 extension RampPlacerViewController: ARSCNViewDelegate {
@@ -83,7 +137,8 @@ extension RampPlacerViewController: UIPopoverPresentationControllerDelegate {
 }
 
 extension RampPlacerViewController: RampPickerDelegate {
-    func didSelectRamp(rampName: String) {
-        selectedRamp = rampName
+    func didSelectRamp(ramp: SCNNode) {
+        selectedRamp = ramp
+        buttonsStackView.isHidden = false
     }
 }

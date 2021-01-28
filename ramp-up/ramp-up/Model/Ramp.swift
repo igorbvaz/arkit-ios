@@ -9,6 +9,20 @@ import Foundation
 import SceneKit
 
 class Ramp: SCNNode {
+    
+    class func getRamp(name: String) -> SCNNode {
+        switch name {
+        case "pipe":
+            return getPipe()
+        case "pyramid":
+            return getPyramid()
+        case "quarter":
+            return getQuarter()
+        default:
+            return getPipe()
+        }
+    }
+    
     class func getPipe() -> SCNNode {
         return getNode(rampName: "pipe", scale: SCNVector3Make(0.002, 0.002, 0.002), position: SCNVector3Make(1, 0.5, -1))!
     }

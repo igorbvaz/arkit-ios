@@ -31,29 +31,106 @@
                                     <action selector="rampButtonActionWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="dgR-s7-QtN"/>
                                 </connections>
                             </button>
+                            <stackView hidden="YES" opaque="NO" contentMode="scaleToFill" alignment="top" spacing="11" translatesAutoresizingMaskIntoConstraints="NO" id="tqW-Ka-gkr">
+                                <rect key="frame" x="20" y="790" width="161" height="32"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e09-Eq-Ip4">
+                                        <rect key="frame" x="0.0" y="0.0" width="32" height="32"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="8FY-Vs-ROa"/>
+                                            <constraint firstAttribute="width" constant="32" id="ABe-x8-tXO"/>
+                                        </constraints>
+                                        <state key="normal" image="removeButton"/>
+                                        <connections>
+                                            <action selector="removeTappedWithSender:" destination="BV1-FR-VrT" eventType="touchUpInside" id="Zye-SO-dh1"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vyr-Jj-Egz">
+                                        <rect key="frame" x="43" y="0.0" width="32" height="32"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="wBC-T0-Ixr"/>
+                                            <constraint firstAttribute="height" constant="32" id="x6Z-yu-bGG"/>
+                                        </constraints>
+                                        <state key="normal" image="rotateButton"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="nSn-B1-bMR" appends="YES" id="6nO-nO-OIT"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="bpV-Ml-wPG">
+                                        <rect key="frame" x="86" y="0.0" width="32" height="32"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="width" constant="32" id="doY-t1-t7b"/>
+                                            <constraint firstAttribute="height" constant="32" id="g1A-fX-uUG"/>
+                                        </constraints>
+                                        <state key="normal" image="upArrow"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="VqV-lt-XR6" appends="YES" id="lby-gg-CNm"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vBc-XW-Slz">
+                                        <rect key="frame" x="129" y="0.0" width="32" height="32"/>
+                                        <gestureRecognizers/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="32" id="4c2-Fe-JVa"/>
+                                            <constraint firstAttribute="width" constant="32" id="6jV-NO-r0p"/>
+                                        </constraints>
+                                        <state key="normal" image="downArrow"/>
+                                        <connections>
+                                            <outletCollection property="gestureRecognizers" destination="ry1-rV-L8f" appends="YES" id="Jzu-NG-MMN"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                            </stackView>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="fQZ-KI-GVf"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
+                            <constraint firstItem="tqW-Ka-gkr" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" constant="20" id="G8p-Me-cIu"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="leading" secondItem="fQZ-KI-GVf" secondAttribute="leading" id="GsS-dJ-CKf"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" id="VpT-BR-CcM"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="trailing" secondItem="fQZ-KI-GVf" secondAttribute="trailing" id="XyZ-9z-H8e"/>
+                            <constraint firstItem="fQZ-KI-GVf" firstAttribute="bottom" secondItem="tqW-Ka-gkr" secondAttribute="bottom" constant="40" id="ZkU-4E-OlT"/>
                             <constraint firstItem="fQZ-KI-GVf" firstAttribute="trailing" secondItem="yQI-MC-atk" secondAttribute="trailing" constant="20" id="ocl-UI-rKa"/>
                             <constraint firstItem="BrB-h1-WRS" firstAttribute="top" secondItem="U0K-SW-4ec" secondAttribute="top" id="rJc-2c-zQA"/>
                             <constraint firstItem="yQI-MC-atk" firstAttribute="bottom" secondItem="fQZ-KI-GVf" secondAttribute="bottom" constant="-20" id="ySs-27-BhR"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="buttonsStackView" destination="tqW-Ka-gkr" id="jlb-NW-UZK"/>
+                        <outlet property="downButton" destination="vBc-XW-Slz" id="97n-9E-TZK"/>
+                        <outlet property="rotateButton" destination="vyr-Jj-Egz" id="WOj-ap-lPy"/>
                         <outlet property="sceneView" destination="BrB-h1-WRS" id="5nT-qQ-ynl"/>
+                        <outlet property="upButton" destination="bpV-Ml-wPG" id="EVX-eq-F6z"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="SZV-WD-TEh" sceneMemberID="firstResponder"/>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.10000000000000001" id="nSn-B1-bMR">
+                    <connections>
+                        <action selector="onLongPress:" destination="BV1-FR-VrT" id="xV1-mM-GYm"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.10000000000000001" id="VqV-lt-XR6">
+                    <connections>
+                        <action selector="onLongPress:" destination="BV1-FR-VrT" id="In3-Ys-o0S"/>
+                    </connections>
+                </pongPressGestureRecognizer>
+                <pongPressGestureRecognizer allowableMovement="10" minimumPressDuration="0.10000000000000001" id="ry1-rV-L8f">
+                    <connections>
+                        <action selector="onLongPress:" destination="BV1-FR-VrT" id="3On-1f-Flj"/>
+                    </connections>
+                </pongPressGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="139" y="100"/>
+            <point key="canvasLocation" x="137.68115942028987" y="99.776785714285708"/>
         </scene>
     </scenes>
     <resources>
+        <image name="downArrow" width="32" height="32"/>
         <image name="rampIcon" width="107" height="71"/>
+        <image name="removeButton" width="32" height="32"/>
+        <image name="rotateButton" width="32" height="32"/>
+        <image name="upArrow" width="32" height="32"/>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
         </systemColor>

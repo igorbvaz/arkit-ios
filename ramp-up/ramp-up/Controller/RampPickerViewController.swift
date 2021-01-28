@@ -9,7 +9,7 @@ import UIKit
 import SceneKit
 
 protocol RampPickerDelegate: AnyObject {
-    func didSelectRamp(rampName: String)
+    func didSelectRamp(ramp: SCNNode)
 }
 class RampPickerViewController: UIViewController {
 
@@ -61,7 +61,9 @@ class RampPickerViewController: UIViewController {
             guard let node = hitResults.first?.node else { return }
             switch node.name {
             case "pipe", "pyramid", "quarter":
-                delegate?.didSelectRamp(rampName: node.name ?? "unknown")
+                let ramp = Ramp.getRamp(name: node.name!)
+                delegate?.didSelectRamp(ramp: ramp)
+                dismiss(animated: true, completion: nil)
             default:
                 break
             }
