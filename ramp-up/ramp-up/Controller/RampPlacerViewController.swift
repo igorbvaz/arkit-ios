@@ -12,6 +12,7 @@ import ARKit
 class RampPlacerViewController: UIViewController {
 
     @IBOutlet var sceneView: ARSCNView!
+    var selectedRamp: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -83,6 +84,6 @@ extension RampPlacerViewController: UIPopoverPresentationControllerDelegate {
 
 extension RampPlacerViewController: RampPickerDelegate {
     func didSelectRamp(rampName: String) {
-        print(rampName)
+        selectedRamp = rampName
     }
 }
