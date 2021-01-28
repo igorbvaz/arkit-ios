@@ -9,7 +9,7 @@ import UIKit
 import SceneKit
 import ARKit
 
-class RampPlacerViewController: UIViewController, ARSCNViewDelegate {
+class RampPlacerViewController: UIViewController {
 
     @IBOutlet var sceneView: ARSCNView!
     
@@ -23,7 +23,7 @@ class RampPlacerViewController: UIViewController, ARSCNViewDelegate {
         sceneView.showsStatistics = true
         
         // Create a new scene
-        let scene = SCNScene(named: "art.scnassets/ship.scn")!
+        let scene = SCNScene(named: "art.scnassets/pipe.dae")!
         
         // Set the scene to the view
         sceneView.scene = scene
@@ -45,18 +45,20 @@ class RampPlacerViewController: UIViewController, ARSCNViewDelegate {
         // Pause the view's session
         sceneView.session.pause()
     }
-
-    // MARK: - ARSCNViewDelegate
     
-/*
-    // Override to create and configure nodes for anchors added to the view's session.
-    func renderer(_ renderer: SCNSceneRenderer, nodeFor anchor: ARAnchor) -> SCNNode? {
-        let node = SCNNode()
-     
-        return node
+    @IBAction func rampButtonAction(sender: UIButton) {
+        let rampPickerViewController = RampPickerViewController(size: CGSize(width: 250, height: 500))
+        rampPickerViewController.delegate = self
+        rampPickerViewController.modalPresentationStyle = .popover
+        rampPickerViewController.popoverPresentationController?.delegate = self
+        present(rampPickerViewController, animated: true, completion: nil)
+        rampPickerViewController.popoverPresentationController?.sourceView = sender
+        rampPickerViewController.popoverPresentationController?.sourceRect = sender.bounds
     }
-*/
     
+}
+
+extension RampPlacerViewController: ARSCNViewDelegate {
     func session(_ session: ARSession, didFailWithError error: Error) {
         // Present an error message to the user
         
@@ -70,5 +72,17 @@ class RampPlacerViewController: UIViewController, ARSCNViewDelegate {
     func sessionInterruptionEnded(_ session: ARSession) {
         // Reset tracking and/or remove existing anchors if consistent tracking is required
         
+    }
+}
+
+extension RampPlacerViewController: UIPopoverPresentationControllerDelegate {
+    func adaptivePresentationStyle(for controller: UIPresentationController) -> UIModalPresentationStyle {
+        return .none
+    }
+}
+
+extension RampPlacerViewController: RampPickerDelegate {
+    func didSelectRamp(rampName: String) {
+        print(rampName)
     }
 }
